@@ -2,38 +2,19 @@ _schema-version: "3.1"
 ID: buildorders
 description: A simple CAP project.
 version: 1.0.1
-parameters:
-  ###deploy_mode: html5-repo
-  enable-parallel-deployments: true
-build-parameters:
-  before-all:
-  - builder: custom
-    commands:
-    - npx -p @sap/cds-dk cds build --production
-
-
-# ----------------------------------------------------------------
-# ----------------------------------------------------------------
-# ----------------------------MODULES-----------------------------
-# ----------------------------------------------------------------
-# ----------------------------------------------------------------
 modules:
-
-# --------------------- CAP SERVER MODULE ------------------------
 - name: buildorders-srv
-# ----------------------------------------------------------------
   type: nodejs
   path: gen/srv
   properties:
     SAP_JWT_TRUST_ACL: '[{"clientid":"*","identityzone":"*"}]'
   requires:
-  # Resources extracted from CAP configuration
   - name: buildorders-xsuaa-service
   - name: buildorders-destination-service
     parameters:
       content-target: true
   provides:
-  - name: srv-api # required by consumers of CAP services (e.g. approuter)
+  - name: srv-api
     properties:
       srv-url: ${default-url}
   parameters:
@@ -42,78 +23,86 @@ modules:
     memory: 256M
   build-parameters:
     builder: npm-ci
-
-# ----------------------------------------------------------------
-# ----------------------------------------------------------------
-# ---------------------------RESOURCES----------------------------
-# ----------------------------------------------------------------
-# ----------------------------------------------------------------
+- name: buildorders-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: buildorders-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - buildordersappproducts.zip
+      name: buildordersappproducts
+      target-path: resources/
+    - artifacts:
+      - buildordersappcustomer.zip
+      name: buildordersappcustomer
+      target-path: resources/
+    - artifacts:
+      - buildordersapporders.zip
+      name: buildordersapporders
+      target-path: resources/
+- name: buildordersappproducts
+  type: html5
+  path: app/products
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: buildordersappcustomer
+  type: html5
+  path: app/customer
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: buildordersapporders
+  type: html5
+  path: app/orders
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
 resources:
-
-# ------------------------ XSUAA Service -------------------------  
 - name: buildorders-xsuaa-service
-# ----------------------------------------------------------------
   type: org.cloudfoundry.managed-service
   parameters:
     path: ./xs-security.json
     service: xsuaa
     service-name: buildorders-xsuaa-service
     service-plan: application
-
-# ----------------- Destination Service -------------------   
 - name: buildorders-destination-service
-# ---------------------------------------------------------
   type: org.cloudfoundry.managed-service
   parameters:
     config:
-      ##HTML5Runtime_enabled: true
+      HTML5Runtime_enabled: true
       init_data:
-        subaccount:
+        instance:
           destinations:
           - Authentication: NoAuthentication
-            Description: CAP Build Products Destination Service
-            HTML5.DynamicDestination: true
-            HTML5.ForwardAuthToken: true
-            HTML5.Timeout: 300000
-            WebIDEEnabled: true
-            AppgyverEnabled: true
-            Name: buildorders
+            Name: ui5
             ProxyType: Internet
             Type: HTTP
-            URL: ~{srv-api/srv-url} 
+            URL: https://ui5.sap.com
           - Authentication: NoAuthentication
-            Description: CAP Build Products Rest
             HTML5.DynamicDestination: true
             HTML5.ForwardAuthToken: true
-            HTML5.Timeout: 300000
-            WebIDEEnabled: true
-            AppgyverEnabled: true
-            Name: buildorders_rest
+            Name: buildorders-srv-api
             ProxyType: Internet
             Type: HTTP
-            URL: ~{srv-api/srv-url}/catalog-rest 
-          - Authentication: NoAuthentication
-            Description: CAP Build Products Odata
-            HTML5.DynamicDestination: true
-            HTML5.ForwardAuthToken: true
-            HTML5.Timeout: 300000
-            WebIDEEnabled: true
-            AppgyverEnabled: true
-            Name: buildorders_odata
-            ProxyType: Internet
-            Type: HTTP
-            URL: ~{srv-api/srv-url}/catalog
-          - Authentication: NoAuthentication
-            Description: CAP Build Products Odata v2
-            HTML5.DynamicDestination: true
-            HTML5.ForwardAuthToken: true
-            HTML5.Timeout: 300000
-            WebIDEEnabled: true
-            AppgyverEnabled: true
-            Name: buildorders_odata
-            ProxyType: Internet
-            Type: HTTP
-            URL: ~{srv-api/srv-url}/v2/catalog                         
+            URL: ~{srv-api/srv-url}
           existing_destinations_policy: update
       version: 1.0.0
     service: destination
@@ -121,4 +110,17 @@ resources:
     service-plan: lite
   requires:
   - name: srv-api
-
+- name: buildorders-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: buildorders-html5-srv
+    service-plan: app-host
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npx -p @sap/cds-dk cds build --production
