@@ -238,7 +238,7 @@ annotate OrderItems with @(
                 ![@UI.TextArrangement] : #TextOnly
             },
           ValueList                : {
-              CollectionPath : 'Invoice',
+              CollectionPath : 'Orders',
               SearchSupported: true,
               Parameters     : [
                 {

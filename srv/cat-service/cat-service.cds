@@ -1,4 +1,4 @@
-using buildorders as buildorders from '../db/data-model';
+using buildorders as buildorders from '../../db/data-model';
 
 
 service CatalogService {// @( requires:'authenticated-user') {
@@ -8,12 +8,12 @@ service CatalogService {// @( requires:'authenticated-user') {
     entity Orders as projection on buildorders.Orders ;
     entity OrderItems as projection on buildorders.OrderItems;
 
+
     type product {};
 
     function getEAN (barcode: String)  returns product;
 
     action loadProducts() returns {};
-
 
     function loadProductsGet (update: String)  returns product;
     
