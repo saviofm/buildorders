@@ -197,7 +197,7 @@ annotate Orders with @(
 //------------------------------------------------------//
 //------------------------------------------------------//
 //Entity
-entity OrdersItems : cuid , managed {
+entity OrderItems : cuid , managed {
       order: Association to Orders;
       product: Association to Products;
       itemQtd: Integer;
@@ -206,9 +206,9 @@ entity OrdersItems : cuid , managed {
 
 @cds.odata.valuelist
 //Annotation
-annotate OrdersItems with @(
-  title              : '{i18n>OrdersItems}',
-  description        : '{i18n>OrdersItems}',
+annotate OrderItems with @(
+  title              : '{i18n>OrderItems}',
+  description        : '{i18n>OrderItems}',
   UI.TextArrangement : #TextOnly,
   Common.SemanticKey : [order.orderNumber, product.productName],
   UI.Identification  : [{
