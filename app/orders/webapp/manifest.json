@@ -17,7 +17,7 @@
         },
         "dataSources": {
             "mainService": {
-                "uri": "/odata/v4/catalog-service-draft/",
+                "uri": "odata/v4/catalog-service-draft/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
@@ -37,7 +37,7 @@
                     "action": "ORDERS",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
-                    "icon": ""
+                    "icon": "sap-icon://BusinessSuiteInAppSymbols/icon-legal-section"
                 }
             }
         }

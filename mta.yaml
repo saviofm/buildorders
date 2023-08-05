@@ -192,6 +192,8 @@ resources:
             HTML5.Timeout: 300000
             WebIDEEnabled: true
             AppgyverEnabled: true
+            sap.applicationdevelopment.actions.enabled: true
+            sap.processautomation.enabled: true
             Name: buildorders_rest
             ProxyType: Internet
             Type: HTTP
@@ -203,6 +205,8 @@ resources:
             HTML5.Timeout: 300000
             WebIDEEnabled: true
             AppgyverEnabled: true
+            sap.applicationdevelopment.actions.enabled: true
+            sap.processautomation.enabled: true
             Name: buildorders_odata
             ProxyType: Internet
             Type: HTTP
@@ -214,6 +218,8 @@ resources:
             HTML5.Timeout: 300000
             WebIDEEnabled: true
             AppgyverEnabled: true
+            sap.applicationdevelopment.actions.enabled: true
+            sap.processautomation.enabled: true
             Name: buildorders_odata
             ProxyType: Internet
             Type: HTTP

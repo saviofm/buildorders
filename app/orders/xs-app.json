@@ -3,9 +3,9 @@
   "authenticationMethod": "route",
   "routes": [
     {
-      "source": "^/odata/(.*)$",
-      "target": "/odata/$1",
-      "destination": "buildorders-srv-api",
+      "source": "^/odata/v4/catalog-service-draft/(.*)$",
+      "target": "/odata/v4/catalog-service-draft/$1",
+      "destination": "buildorders",
       "authenticationType": "xsuaa",
       "csrfProtection": false
     },
