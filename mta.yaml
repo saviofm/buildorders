@@ -9,7 +9,7 @@ build-parameters:
   before-all:
   - builder: custom
     commands:
-    - npx -p @sap/cds-dk cds build --production
+    - npx cds build --production
 
 
 # ----------------------------------------------------------------
@@ -124,6 +124,7 @@ modules:
     SAP_JWT_TRUST_ACL: '[{"clientid":"*","identityzone":"*"}]'
   requires:
   # Resources extracted from CAP configuration
+  - name: buildorders-db
   - name: buildorders-xsuaa-service
   - name: buildorders-destination-service
     parameters:
@@ -137,7 +138,18 @@ modules:
     disk-quota: 512M
     memory: 256M
   build-parameters:
-    builder: npm-ci
+    builder: npm
+
+# -------------- SIDECAR MODULE - DB DEPLOYER-----------------     
+- name: buildorders-db-deployer
+# ------------------------------------------------------------
+  type: hdb
+  path: gen/db
+  requires:
+  - name: buildorders-db
+  - name: buildorders-xsuaa-service
+  parameters:
+    buildpack: nodejs_buildpack
 
 # ----------------------------------------------------------------
 # ----------------------------------------------------------------
@@ -145,7 +157,15 @@ modules:
 # ----------------------------------------------------------------
 # ----------------------------------------------------------------
 resources:
-
+# --------------------- DB - HDI CONTAINER------------------------
+- name: buildorders-db
+# ----------------------------------------------------------------
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+  properties:
+    hdi-service-name: ${service-name}
 # ------------------------ XSUAA Service -------------------------  
 - name: buildorders-xsuaa-service
 # ----------------------------------------------------------------
@@ -175,7 +195,7 @@ resources:
         subaccount:
           destinations:
           - Authentication: NoAuthentication
-            Description: CAP Build Products Destination Service
+            Description: CAP Build Orders Destination Service
             HTML5.DynamicDestination: true
             HTML5.ForwardAuthToken: true
             HTML5.Timeout: 300000
@@ -186,7 +206,7 @@ resources:
             Type: HTTP
             URL: ~{srv-api/srv-url} 
           - Authentication: NoAuthentication
-            Description: CAP Build Products Rest
+            Description: CAP Build Orders Rest
             HTML5.DynamicDestination: true
             HTML5.ForwardAuthToken: true
             HTML5.Timeout: 300000
@@ -197,7 +217,7 @@ resources:
             Name: buildorders_rest
             ProxyType: Internet
             Type: HTTP
-            URL: ~{srv-api/srv-url}/catalog-rest 
+            URL: ~{srv-api/srv-url}/rest/catalog
           - Authentication: NoAuthentication
             Description: CAP Build Products Odata
             HTML5.DynamicDestination: true
@@ -210,7 +230,7 @@ resources:
             Name: buildorders_odata
             ProxyType: Internet
             Type: HTTP
-            URL: ~{srv-api/srv-url}/catalog
+            URL: ~{srv-api/srv-url}/odata/v4/catalog
           - Authentication: NoAuthentication
             Description: CAP Build Products Odata v2
             HTML5.DynamicDestination: true
@@ -220,10 +240,10 @@ resources:
             AppgyverEnabled: true
             sap.applicationdevelopment.actions.enabled: true
             sap.processautomation.enabled: true
-            Name: buildorders_odata
+            Name: buildorders_odata_v2
             ProxyType: Internet
             Type: HTTP
-            URL: ~{srv-api/srv-url}/v2/catalog                         
+            URL: ~{srv-api/srv-url}/odata/v2/catalog                     
           existing_destinations_policy: update
       version: 1.0.0
     service: destination

@@ -6,21 +6,23 @@
     "license": "UNLICENSED",
     "private": true,
     "dependencies": {
-        "@sap/cds": "7.0.x",
+        "@cap-js/graphql": "^0.6.2",
+        "@sap/cds": "^7.0.x",
+        "@sap/cds-hana": "^2",
         "@sap/cds-odata-v2-adapter-proxy": "1.9.21",
         "@sap/textbundle": "4.2.0",
         "@sap/xsenv": "3.4.0",
         "@sap/xssec": "3.2.17",
         "cds-swagger-ui-express": "^0.6.0",
         "express": "^4",
-        "hdb": "^0.19.1",
         "passport": "^0.6.0"
     },
     "devDependencies": {
-        "@sap/ux-specification": "^1.108.10",
-        "cds-plugin-ui5": "^0.1.4",
-        "rimraf": "^3.0.2",
-        "sqlite3": "^5"
+        "@cap-js/sqlite": "^1",
+        "@sap/cds-dk": "^7",
+        "@sap/ux-specification": "^1.108.11",
+        "cds-plugin-ui5": "^0.2.1",
+        "rimraf": "^3.0.2"
     },
     "engines": {
         "node": "16.x.x",
@@ -51,7 +53,7 @@
                     "db",
                     "srv"
                 ],
-                "kind": "sql",
+                "kind": "hana",
                 "pool": {
                     "acquireTimeoutMillis": 600000,
                     "min": 0,

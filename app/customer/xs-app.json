@@ -1,13 +1,26 @@
 {
   "welcomeFile": "/index.html",
-  "authenticationMethod": "route",
+  "authenticationMethod": "none",
   "routes": [
     {
       "source": "^/odata/(.*)$",
       "target": "/odata/$1",
-      "destination": "buildorders",
-      "authenticationType": "xsuaa",
+      "destination": "buildorders-srv-api",
+      "authenticationType": "none",
       "csrfProtection": false
+    },
+
+    {
+      "source": "^/resources/(.*)$",
+      "target": "/resources/$1",
+      "authenticationType": "none",
+      "destination": "ui5"
+    },
+    {
+      "source": "^/test-resources/(.*)$",
+      "target": "/test-resources/$1",
+      "authenticationType": "none",
+      "destination": "ui5"
     },
     {
       "source": "^(.*)$",
