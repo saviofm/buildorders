@@ -12,12 +12,12 @@
         "resources": "resources.json",
         "sourceTemplate": {
             "id": "@sap/generator-fiori:lrop",
-            "version": "1.10.3",
-            "toolsId": "37e904ad-a84c-4763-8709-141a1731107b"
+            "version": "1.10.4",
+            "toolsId": "7719c92f-c425-4dcc-b42e-f64f48406df4"
         },
         "dataSources": {
             "mainService": {
-                "uri": "odata/v4/catalog-service-draft/",
+                "uri": "/odata/v4/catalog-service-draft/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
@@ -37,7 +37,7 @@
                     "action": "CUSTOMER",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
-                    "icon": "sap-icon://BusinessSuiteInAppSymbols/icon-responsible-area"
+                    "icon": "sap-icon://customer-financial-fact-sheet"
                 }
             }
         }

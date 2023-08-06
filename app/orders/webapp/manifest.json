@@ -12,12 +12,12 @@
         "resources": "resources.json",
         "sourceTemplate": {
             "id": "@sap/generator-fiori:lrop",
-            "version": "1.10.3",
-            "toolsId": "4e2a7c95-c8aa-4c9a-b698-e63f1adba716"
+            "version": "1.10.4",
+            "toolsId": "30f55d1f-1c3a-4b58-a81f-e5c43a2b4e44"
         },
         "dataSources": {
             "mainService": {
-                "uri": "odata/v4/catalog-service-draft/",
+                "uri": "/odata/v4/catalog-service-draft/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
@@ -37,7 +37,7 @@
                     "action": "ORDERS",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
-                    "icon": "sap-icon://BusinessSuiteInAppSymbols/icon-legal-section"
+                    "icon": "sap-icon://customer-order-entry"
                 }
             }
         }
@@ -114,11 +114,6 @@
                     "pattern": "OrdersFiori({key}):?query:",
                     "name": "OrdersFioriObjectPage",
                     "target": "OrdersFioriObjectPage"
-                },
-                {
-                    "pattern": "OrdersFiori({key})/orderItems({key2}):?query:",
-                    "name": "OrderItemsFioriObjectPage",
-                    "target": "OrderItemsFioriObjectPage"
                 }
             ],
             "targets": {
@@ -147,25 +142,7 @@
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "OrdersFiori",
-                            "navigation": {
-                                "orderItems": {
-                                    "detail": {
-                                        "route": "OrderItemsFioriObjectPage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "OrderItemsFioriObjectPage": {
-                    "type": "Component",
-                    "id": "OrderItemsFioriObjectPage",
-                    "name": "sap.fe.templates.ObjectPage",
-                    "options": {
-                        "settings": {
-                            "editableHeaderContent": false,
-                            "entitySet": "OrderItemsFiori"
+                            "entitySet": "OrdersFiori"
                         }
                     }
                 }

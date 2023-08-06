@@ -68,6 +68,10 @@
     "sapux": [
         "app/products",
         "app/customer",
+        "app/orders",
+        "app/products",
+        "app/products",
+        "app/customer",
         "app/orders"
     ]
 }

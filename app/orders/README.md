@@ -1,15 +1,15 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Wed Aug 02 2023 22:23:41 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Sun Aug 06 2023 17:36:11 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>@sap/generator-fiori-elements|
-|**App Generator Version**<br>1.10.3|
+|**App Generator Version**<br>1.10.4|
 |**Generation Platform**<br>SAP Business Application Studio|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>Local Cap|
 |**Service URL**<br>http://localhost:4004/odata/v4/catalog-service-draft/
 |**Module Name**<br>orders|
-|**Application Title**<br>Orders|
+|**Application Title**<br>Build Orders |
 |**Namespace**<br>buildorders.app|
 |**UI5 Theme**<br>sap_horizon|
 |**UI5 Version**<br>1.116.0|
@@ -17,11 +17,11 @@
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>False|
 |**Main Entity**<br>OrdersFiori|
-|**Navigation Entity**<br>orderItems|
+|**Navigation Entity**<br>None|
 
 ## orders
 
-Ordens Build
+Build Orders
 
 ### Starting the generated app
 

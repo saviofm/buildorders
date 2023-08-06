@@ -2,39 +2,22 @@ _schema-version: "3.1"
 ID: buildorders
 description: A simple CAP project.
 version: 1.0.1
-parameters:
-  ###deploy_mode: html5-repo
-  enable-parallel-deployments: true
-build-parameters:
-  before-all:
-  - builder: custom
-    commands:
-    - npx cds build --production
-
-
-# ----------------------------------------------------------------
-# ----------------------------------------------------------------
-# ----------------------------MODULES-----------------------------
-# ----------------------------------------------------------------
-# ----------------------------------------------------------------
 modules:
-# ------------------------ HTML5 Content -------------------------
 - name: buildorders-destination-content
-# ----------------------------------------------------------------
   type: com.sap.application.content
   path: .
   requires:
-   - name: buildorders-xsuaa-service
-     parameters:
-       service-key:
-         name: buildorders_xsuaa-key
-   - name: buildorders-html5-host
-     parameters:
-       service-key:
-         name: buildorders_html5_host-key
-   - name: buildorders-destination-service
-     parameters:
-       content-target: true      
+  - name: buildorders-xsuaa-service
+    parameters:
+      service-key:
+        name: buildorders_xsuaa-key
+  - name: buildorders-html5-host
+    parameters:
+      service-key:
+        name: buildorders_html5_host-key
+  - name: buildorders-destination-service
+    parameters:
+      content-target: true
   parameters:
     content:
       subaccount:
@@ -48,13 +31,10 @@ modules:
           ServiceInstanceName: buildorders-xsuaa-service
           ServiceKeyName: buildorders_xsuaa-key
           sap.cloud.service: buildorders
-        existing_destinations_policy: update    
+        existing_destinations_policy: update
   build-parameters:
     no-source: true
-
-# -------------------- UI DEPLOYER MODULE -------------------- 
-- name: buildorders-ui-deployer 
-# ------------------------------------------------------------
+- name: buildorders-ui-deployer
   type: com.sap.application.content
   path: .
   requires:
@@ -76,10 +56,7 @@ modules:
       - buildordersapporders.zip
       name: buildordersapporders
       target-path: resources/
-
-# --------------------- HTML5 MODULE -------------------------- 
 - name: buildordersappproducts
-# ------------------------------------------------------------- 
   type: html5
   path: app/products
   build-parameters:
@@ -89,9 +66,7 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-# --------------------- HTML5 MODULE --------------------------
 - name: buildordersappcustomer
-# -------------------------------------------------------------  
   type: html5
   path: app/customer
   build-parameters:
@@ -101,9 +76,7 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-# --------------------- HTML5 MODULE --------------------------
 - name: buildordersapporders
-# ------------------------------------------------------------- 
   type: html5
   path: app/orders
   build-parameters:
@@ -113,24 +86,19 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-
-
-# --------------------- CAP SERVER MODULE ------------------------
 - name: buildorders-srv
-# ----------------------------------------------------------------
   type: nodejs
   path: gen/srv
   properties:
     SAP_JWT_TRUST_ACL: '[{"clientid":"*","identityzone":"*"}]'
   requires:
-  # Resources extracted from CAP configuration
   - name: buildorders-db
   - name: buildorders-xsuaa-service
   - name: buildorders-destination-service
     parameters:
       content-target: true
   provides:
-  - name: srv-api # required by consumers of CAP services (e.g. approuter)
+  - name: srv-api
     properties:
       srv-url: ${default-url}
   parameters:
@@ -139,10 +107,7 @@ modules:
     memory: 256M
   build-parameters:
     builder: npm
-
-# -------------- SIDECAR MODULE - DB DEPLOYER-----------------     
 - name: buildorders-db-deployer
-# ------------------------------------------------------------
   type: hdb
   path: gen/db
   requires:
@@ -150,52 +115,39 @@ modules:
   - name: buildorders-xsuaa-service
   parameters:
     buildpack: nodejs_buildpack
-
-# ----------------------------------------------------------------
-# ----------------------------------------------------------------
-# ---------------------------RESOURCES----------------------------
-# ----------------------------------------------------------------
-# ----------------------------------------------------------------
 resources:
-# --------------------- DB - HDI CONTAINER------------------------
 - name: buildorders-db
-# ----------------------------------------------------------------
   type: com.sap.xs.hdi-container
   parameters:
     service: hana
     service-plan: hdi-shared
   properties:
     hdi-service-name: ${service-name}
-# ------------------------ XSUAA Service -------------------------  
 - name: buildorders-xsuaa-service
-# ----------------------------------------------------------------
   type: org.cloudfoundry.managed-service
   parameters:
     path: ./xs-security.json
     service: xsuaa
     service-name: buildorders-xsuaa-service
     service-plan: application
-
-# ----------------- Destination Service -------------------   
 - name: buildorders-destination-service
-# ---------------------------------------------------------
   type: org.cloudfoundry.managed-service
   parameters:
     config:
-      ##HTML5Runtime_enabled: true
+      HTML5Runtime_enabled: true
       init_data:
-        destinations:
-          instance:
-            - Authentication: NoAuthentication
-              Name: ui5
-              ProxyType: Internet
-              Type: HTTP
-              URL: https://ui5.sap.com
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
           existing_destinations_policy: update
         subaccount:
           destinations:
           - Authentication: NoAuthentication
-            Description: CAP Build Orders Destination Service
+            Description: CAP Build Orders Destination Service  
             HTML5.DynamicDestination: true
             HTML5.ForwardAuthToken: true
             HTML5.Timeout: 300000
@@ -204,7 +156,7 @@ resources:
             Name: buildorders
             ProxyType: Internet
             Type: HTTP
-            URL: ~{srv-api/srv-url} 
+            URL: ~{srv-api/srv-url}
           - Authentication: NoAuthentication
             Description: CAP Build Orders Rest
             HTML5.DynamicDestination: true
@@ -243,7 +195,7 @@ resources:
             Name: buildorders_odata_v2
             ProxyType: Internet
             Type: HTTP
-            URL: ~{srv-api/srv-url}/odata/v2/catalog                     
+            URL: ~{srv-api/srv-url}/odata/v2/catalog                 
           existing_destinations_policy: update
       version: 1.0.0
     service: destination
@@ -251,15 +203,19 @@ resources:
     service-plan: lite
   requires:
   - name: srv-api
-
-
-# ----------------------- HTML5 Host ------------------------
 - name: buildorders-html5-host
-# -----------------------------------------------------------
   type: org.cloudfoundry.managed-service
   parameters:
-    service: html5-apps-repo
-    service-plan: app-host
-    service-name: buildorders-html5-host-service
     config:
       sizeLimit: 5
+    service: html5-apps-repo
+    service-name: buildorders-html5-host-service
+    service-plan: app-host
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npx cds build --production

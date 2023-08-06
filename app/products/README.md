@@ -1,9 +1,9 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Wed Aug 02 2023 21:59:38 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Sun Aug 06 2023 17:24:47 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>@sap/generator-fiori-elements|
-|**App Generator Version**<br>1.10.3|
+|**App Generator Version**<br>1.10.4|
 |**Generation Platform**<br>SAP Business Application Studio|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>Local Cap|

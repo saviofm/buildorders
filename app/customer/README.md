@@ -1,15 +1,15 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Wed Aug 02 2023 22:15:17 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Sun Aug 06 2023 17:31:55 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>@sap/generator-fiori-elements|
-|**App Generator Version**<br>1.10.3|
+|**App Generator Version**<br>1.10.4|
 |**Generation Platform**<br>SAP Business Application Studio|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>Local Cap|
 |**Service URL**<br>http://localhost:4004/odata/v4/catalog-service-draft/
 |**Module Name**<br>customer|
-|**Application Title**<br>Order Customer|
+|**Application Title**<br>Customer Build Orders|
 |**Namespace**<br>buildorders.app|
 |**UI5 Theme**<br>sap_horizon|
 |**UI5 Version**<br>1.116.0|
@@ -20,7 +20,7 @@
 
 ## customer
 
-A Fiori application.
+Customer Build Orders
 
 ### Starting the generated app
 

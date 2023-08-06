@@ -12,12 +12,12 @@
         "resources": "resources.json",
         "sourceTemplate": {
             "id": "@sap/generator-fiori:lrop",
-            "version": "1.10.3",
-            "toolsId": "fa80af1f-aeae-409d-aa58-9ab7229bf8a6"
+            "version": "1.10.4",
+            "toolsId": "59720967-e4ef-4142-a7ac-7040ce0e7e5a"
         },
         "dataSources": {
             "mainService": {
-                "uri": "odata/v4/catalog-service-draft/",
+                "uri": "/odata/v4/catalog-service-draft/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
@@ -37,7 +37,7 @@
                     "action": "PRODUCTS",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
-                    "icon": "sap-icon://BusinessSuiteInAppSymbols/icon-goods"
+                    "icon": "sap-icon://add-product"
                 }
             }
         }
