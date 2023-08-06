@@ -1,6 +1,6 @@
 using buildorders as buildorders from '../../db/data-model';
 
-
+@protocol: ['odata', 'rest', 'graphql']
 service CatalogService {// @( requires:'authenticated-user') {
  
     entity Products as projection on buildorders.Products ;

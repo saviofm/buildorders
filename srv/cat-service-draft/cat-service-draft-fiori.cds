@@ -11,6 +11,11 @@ annotate CatalogServiceDraft.ProductsFiori with @(UI: {
                 Value: productName,
                 ![@UI.Importance] : #High
             },
+			{   
+                $Type: 'UI.DataField', 
+                Value: productName,
+                ![@UI.Importance] : #High
+            },
             {   
                 $Type : 'UI.DataField', 
                 Value : productDescription,
@@ -23,7 +28,7 @@ annotate CatalogServiceDraft.ProductsFiori with @(UI: {
             },
             {   
                 $Type : 'UI.DataField', 
-                Value : obs,
+                Value : EAN,
                 ![@UI.Importance] : #High
             }
 		],
@@ -70,6 +75,10 @@ annotate CatalogServiceDraft.ProductsFiori with @(UI: {
                 {
                     $Type : 'UI.DataField',
                     Value: brand
+                },
+                {
+                    $Type : 'UI.DataField',
+                    Value: EAN
                 },
                 {
                     $Type : 'UI.DataField',
